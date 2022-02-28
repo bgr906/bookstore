@@ -1,8 +1,5 @@
 package palvelinohjelmointi.bookstore.web;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,12 +9,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import palvelinohjelmointi.bookstore.domain.Book;
 import palvelinohjelmointi.bookstore.domain.BookRepository;
+import palvelinohjelmointi.bookstore.domain.CategoryRepository;
 
 @Controller
 public class BookController {
 	
 	@Autowired
 	private BookRepository bookRepository;
+	
+	@Autowired
+	private CategoryRepository categoryRepository;
 	
 	@RequestMapping(value = "/booklist", method = RequestMethod.GET)
 	public String bookList(Model model) {
@@ -28,6 +29,7 @@ public class BookController {
 	@RequestMapping(value = "/add")
 	public String addBook(Model model) {
 		model.addAttribute("book", new Book());
+		model.addAttribute("categories", categoryRepository.findAll());
 		return "addbook";
 	}
 	
